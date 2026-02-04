@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You're Invited 💌</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Serif+JP:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --blush: #f4e1e1;
+            --rose: #c9727a;
+            --deep-rose: #a3404a;
+            --cream: #fdf8f4;
+            --gold: #c8a96e;
+            --gold-light: #e8d5a8;
+            --ink: #2c1810;
+            --ink-light: #5a3d31;
+            --sakura: #ffb7c5;
+            --sakura-light: #ffd6e0;
+            --warm-white: #fef9f3;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', 'Noto Serif JP', serif;
+            background-color: var(--cream);
+            color: var(--ink);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── Cherry Blossom Petals ── */
+        .petal {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            background: var(--sakura);
+            border-radius: 50% 0 50% 50%;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1000;
+            animation: fall linear forwards;
+        }
+
+        .petal:nth-child(odd) {
+            background: var(--sakura-light);
+            width: 10px;
+            height: 10px;
+        }
+
+        @keyframes fall {
+            0% {
+                opacity: 0;
+                transform: translateX(0) translateY(0) rotate(0deg) scale(0.8);
+            }
+            10% {
+                opacity: 0.9;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(var(--drift)) translateY(100vh) rotate(var(--spin)) scale(0.4);
+            }
+        }
+
+        /* ── Hero Section ── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            padding: 2rem;
+            background: linear-gradient(180deg, var(--warm-white) 0%, var(--blush) 50%, var(--cream) 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at 30% 20%, rgba(255, 183, 197, 0.2) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 80%, rgba(200, 169, 110, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .kanji-accent {
+            font-family: 'Noto Serif JP', serif;
+            font-weight: 200;
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            color: var(--gold);
+            letter-spacing: 0.8em;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 1s ease 0.3s forwards;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 7vw, 5.5rem);
+            font-weight: 600;
+            color: var(--deep-rose);
+            line-height: 1.15;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeUp 1s ease 0.6s forwards;
+        }
+
+        .hero-title em {
+            font-style: italic;
+            color: var(--rose);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            font-weight: 300;
+            color: var(--ink-light);
+            letter-spacing: 0.15em;
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            animation: fadeUp 1s ease 0.9s forwards;
+        }
+
+        .hero-date {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            color: var(--gold);
+            letter-spacing: 0.3em;
+            margin-top: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 1s ease 1.2s forwards;
+        }
+
+        .divider-heart {
+            margin: 2rem auto;
+            opacity: 0;
+            animation: fadeUp 1s ease 1.4s forwards;
+        }
+
+        .divider-heart svg {
+            width: 30px;
+            height: 30px;
+            fill: var(--rose);
+            filter: drop-shadow(0 2px 4px rgba(201, 114, 122, 0.3));
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            animation: fadeUp 1s ease 1.8s forwards;
+        }
+
+        .scroll-hint span {
+            display: block;
+            font-size: 0.8rem;
+            letter-spacing: 0.3em;
+            color: var(--rose);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .scroll-arrow {
+            width: 20px;
+            height: 20px;
+            margin: 0 auto;
+            border-right: 1.5px solid var(--rose);
+            border-bottom: 1.5px solid var(--rose);
+            transform: rotate(45deg);
+            animation: bounce 2s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 60%, 100% { transform: rotate(45deg) translateY(0); }
+            30% { transform: rotate(45deg) translateY(6px); }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ── Valentine Question Section ── */
+        .valentine-section {
+            padding: 5rem 2rem;
+            text-align: center;
+            background: var(--warm-white);
+            position: relative;
+        }
+
+        .valentine-section::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: linear-gradient(180deg, transparent, var(--warm-white));
+            pointer-events: none;
+        }
+
+        .question-text {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 5vw, 3.5rem);
+            font-weight: 400;
+            font-style: italic;
+            color: var(--deep-rose);
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.4;
+        }
+
+        .love-letter {
+            max-width: 550px;
+            margin: 0 auto 3rem;
+            font-size: clamp(1rem, 2vw, 1.15rem);
+            line-height: 1.9;
+            color: var(--ink-light);
+            font-weight: 300;
+            text-align: center;
+        }
+
+        .yes-btn {
+            display: inline-block;
+            padding: 1rem 3.5rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            letter-spacing: 0.2em;
+            color: var(--warm-white);
+            background: linear-gradient(135deg, var(--rose), var(--deep-rose));
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 20px rgba(163, 64, 74, 0.25);
+            text-transform: uppercase;
+        }
+
+        .yes-btn:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 8px 30px rgba(163, 64, 74, 0.35);
+        }
+
+        .yes-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transition: 0.5s;
+        }
+
+        .yes-btn:hover::after {
+            left: 100%;
+        }
+
+        .heart-burst {
+            display: none;
+            margin-top: 2rem;
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--deep-rose);
+            font-style: italic;
+            animation: heartPulse 1.5s ease infinite;
+        }
+
+        @keyframes heartPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* ── Menu Section ── */
+        .menu-wrapper {
+            background: linear-gradient(180deg, var(--warm-white), var(--cream) 10%, var(--cream) 90%, var(--warm-white));
+            padding: 4rem 1.5rem 5rem;
+        }
+
+        .menu-container {
+            max-width: 680px;
+            margin: 0 auto;
+            background: var(--warm-white);
+            border: 1px solid var(--gold-light);
+            border-radius: 2px;
+            padding: clamp(2rem, 5vw, 4rem);
+            position: relative;
+            box-shadow: 0 4px 40px rgba(44, 24, 16, 0.06);
+        }
+
+        .menu-container::before,
+        .menu-container::after {
+            content: '';
+            position: absolute;
+            left: 20px;
+            right: 20px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+        }
+
+        .menu-container::before { top: 15px; }
+        .menu-container::after { bottom: 15px; }
+
+        .menu-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .menu-kanji {
+            font-family: 'Noto Serif JP', serif;
+            font-weight: 200;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            color: var(--gold);
+            letter-spacing: 0.5em;
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.6rem, 4vw, 2.2rem);
+            font-weight: 600;
+            color: var(--deep-rose);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        .menu-subtitle {
+            font-size: 1rem;
+            color: var(--gold);
+            letter-spacing: 0.4em;
+            margin-top: 0.3rem;
+            font-weight: 300;
+        }
+
+        .gold-line {
+            width: 60px;
+            height: 1px;
+            background: var(--gold);
+            margin: 1.5rem auto 0;
+        }
+
+        /* ── Course Styling ── */
+        .course {
+            margin-bottom: 2.8rem;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: all 0.8s ease;
+        }
+
+        .course.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .course-header {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .course-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.4em;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin-bottom: 0.3rem;
+        }
+
+        .course-japanese {
+            font-family: 'Noto Serif JP', serif;
+            font-weight: 200;
+            font-size: 0.9rem;
+            color: var(--rose);
+            letter-spacing: 0.3em;
+            margin-bottom: 0.2rem;
+        }
+
+        .course-name {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            font-weight: 600;
+            color: var(--ink);
+            letter-spacing: 0.1em;
+        }
+
+        .course-items {
+            text-align: center;
+            padding: 0.5rem 0;
+        }
+
+        .course-item {
+            margin-bottom: 0.6rem;
+        }
+
+        .item-name {
+            font-size: clamp(1rem, 2vw, 1.1rem);
+            font-weight: 400;
+            color: var(--ink);
+            letter-spacing: 0.05em;
+        }
+
+        .item-japanese {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 0.8rem;
+            font-weight: 200;
+            color: var(--gold);
+            margin-left: 0.5rem;
+        }
+
+        .item-desc {
+            font-size: 0.9rem;
+            font-weight: 300;
+            color: var(--ink-light);
+            font-style: italic;
+            margin-top: 0.15rem;
+        }
+
+        .course-divider {
+            width: 30px;
+            height: 1px;
+            background: var(--gold-light);
+            margin: 0 auto;
+            margin-top: 0.5rem;
+        }
+
+        /* ── Menu Separator ── */
+        .menu-sep {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .menu-sep .line {
+            width: 40px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-light));
+        }
+
+        .menu-sep .line:last-child {
+            background: linear-gradient(90deg, var(--gold-light), transparent);
+        }
+
+        .menu-sep .dot {
+            width: 4px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 50%;
+        }
+
+        /* ── Footer ── */
+        .footer {
+            text-align: center;
+            padding: 4rem 2rem 3rem;
+            background: linear-gradient(180deg, var(--warm-white), var(--blush));
+        }
+
+        .footer-kanji {
+            font-family: 'Noto Serif JP', serif;
+            font-weight: 200;
+            font-size: clamp(2rem, 5vw, 3rem);
+            color: var(--rose);
+            margin-bottom: 1rem;
+        }
+
+        .footer-text {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            font-style: italic;
+            color: var(--ink-light);
+            letter-spacing: 0.1em;
+        }
+
+        .footer-sub {
+            font-size: 0.85rem;
+            color: var(--gold);
+            letter-spacing: 0.3em;
+            margin-top: 1rem;
+            font-weight: 300;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 480px) {
+            .menu-container {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        /* ── Reveal on Scroll ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── Confetti Hearts ── */
+        .confetti-heart {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            font-size: 1.2rem;
+            animation: confettiFall 3s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(60vh) rotate(var(--confetti-spin)) scale(0.3);
+            }
+        }
+
+        /* Gentle background texture */
+        .texture-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.015;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body>
+    <div class="texture-overlay"></div>
+
+    <!-- ─── Hero ─── -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="kanji-accent">愛を込めて</div>
+            <h1 class="hero-title">You're <em>Invited</em></h1>
+            <p class="hero-subtitle">An Evening of Love & Omakase</p>
+            <p class="hero-date">Valentine's Day &mdash; February 14th</p>
+            <div class="divider-heart">
+                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </div>
+        </div>
+        <div class="scroll-hint">
+            <span>Scroll</span>
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- ─── Valentine Question ─── -->
+    <section class="valentine-section">
+        <div class="reveal">
+            <p class="question-text">Will you be my Valentine?</p>
+            <div class="love-letter">
+                I've prepared something special for us &mdash;<br>
+                a homemade omakase dinner, made with love,<br>
+                just for the two of us.<br><br>
+                Every piece, every flavor, chosen with you in mind.
+            </div>
+            <button class="yes-btn" onclick="sayYes()">Yes, I'd Love To</button>
+            <div class="heart-burst" id="heartBurst">
+                It's a date! See the menu below&hellip;
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── Omakase Menu ─── -->
+    <section class="menu-wrapper">
+        <div class="menu-container">
+            <div class="menu-header reveal">
+                <div class="menu-kanji">おまかせ</div>
+                <h2 class="menu-title">Omakase</h2>
+                <p class="menu-subtitle">Valentine's Tasting Menu</p>
+                <div class="gold-line"></div>
+            </div>
+
+            <!-- Course 1 - Oysters -->
+            <div class="course reveal">
+                <div class="course-header">
+                    <div class="course-number">First Course</div>
+                    <div class="course-japanese">生牡蠣</div>
+                    <div class="course-name">Sydney Rock Oysters, Two Ways</div>
+                </div>
+                <div class="course-items">
+                    <div class="course-item">
+                        <div class="item-desc">Four oysters. Two pristine with lemon. Two topped with diced cucumber, rice vinegar, and salmon roe.</div>
+                    </div>
+                </div>
+                <div class="course-divider"></div>
+            </div>
+
+            <div class="menu-sep"><span class="line"></span><span class="dot"></span><span class="line"></span></div>
+
+            <!-- Course 2 - Crudo -->
+            <div class="course reveal">
+                <div class="course-header">
+                    <div class="course-number">Second Course</div>
+                    <div class="course-japanese">平政クルード</div>
+                    <div class="course-name">Kingfish Crudo with Citrus &amp; Green Oil</div>
+                </div>
+                <div class="course-items">
+                    <div class="course-item">
+                        <div class="item-desc">Thinly sliced Hiramasa kingfish with orange segments, parsley oil, flaky salt, and pink peppercorns.</div>
+                    </div>
+                </div>
+                <div class="course-divider"></div>
+            </div>
+
+            <div class="menu-sep"><span class="line"></span><span class="dot"></span><span class="line"></span></div>
+
+            <!-- Course 3 - Tartare -->
+            <div class="course reveal">
+                <div class="course-header">
+                    <div class="course-number">Third Course</div>
+                    <div class="course-japanese">鮭タルタル</div>
+                    <div class="course-name">Salmon Tartare with Nori Crisps</div>
+                </div>
+                <div class="course-items">
+                    <div class="course-item">
+                        <div class="item-desc">Hand-chopped Tasmanian salmon dressed with soy, sesame oil, and ginger. Served with homemade toasted nori crisps.</div>
+                    </div>
+                </div>
+                <div class="course-divider"></div>
+            </div>
+
+            <div class="menu-sep"><span class="line"></span><span class="dot"></span><span class="line"></span></div>
+
+            <!-- Course 4 - Sashimi -->
+            <div class="course reveal">
+                <div class="course-header">
+                    <div class="course-number">Fourth Course</div>
+                    <div class="course-japanese">鯛刺身</div>
+                    <div class="course-name">Snapper Sashimi with Ponzu &amp; Daikon</div>
+                </div>
+                <div class="course-items">
+                    <div class="course-item">
+                        <div class="item-desc">Thin slices of snapper with grated daikon, spring onion, and ponzu for dipping.</div>
+                    </div>
+                </div>
+                <div class="course-divider"></div>
+            </div>
+
+            <div class="menu-sep"><span class="line"></span><span class="dot"></span><span class="line"></span></div>
+
+            <!-- Course 5 - Special Sashimi Heart -->
+            <div class="course reveal">
+                <div class="course-header">
+                    <div class="course-number">Fifth Course</div>
+                    <div class="course-japanese">特別お造り</div>
+                    <div class="course-name">Special Sashimi Heart</div>
+                </div>
+                <div class="course-items">
+                    <div class="course-item">
+                        <div class="item-desc">Slices of salmon, kingfish, and ocean trout arranged in a heart shape on a chilled plate. Garnished with edible flowers, shiso leaves, and a drizzle of truffle oil.</div>
+                    </div>
+                </div>
+                <div class="course-divider"></div>
+            </div>
+
+            <div class="menu-sep"><span class="line"></span><span class="dot"></span><span class="line"></span></div>
+
+            <!-- Course 6 - Miso Soup -->
+            <div class="course reveal">
+                <div class="course-header">
+                    <div class="course-number">Sixth Course</div>
+                    <div class="course-japanese">味噌汁</div>
+                    <div class="course-name">Miso Soup with Silken Tofu</div>
+                </div>
+                <div class="course-items">
+                    <div class="course-item">
+                        <div class="item-desc">White miso broth with kombu and bonito dashi, a trembling cube of silken tofu, wakame seaweed, and sliced spring onion.</div>
+                    </div>
+                </div>
+                <div class="course-divider"></div>
+            </div>
+
+            <div class="menu-sep"><span class="line"></span><span class="dot"></span><span class="line"></span></div>
+
+            <!-- Course 7 - Granita -->
+            <div class="course reveal">
+                <div class="course-header">
+                    <div class="course-number">Seventh Course</div>
+                    <div class="course-japanese">口直し</div>
+                    <div class="course-name">Cucumber &amp; Shiso Granita</div>
+                </div>
+                <div class="course-items">
+                    <div class="course-item">
+                        <div class="item-desc">Blitzed cucumber and shiso, barely sweetened, frozen and scraped into flaky ice. A cold green pause.</div>
+                    </div>
+                </div>
+                <div class="course-divider"></div>
+            </div>
+
+            <div class="menu-sep"><span class="line"></span><span class="dot"></span><span class="line"></span></div>
+
+            <!-- Course 8 - Nigiri -->
+            <div class="course reveal">
+                <div class="course-header">
+                    <div class="course-number">Eighth Course</div>
+                    <div class="course-japanese">握り盛り合わせ</div>
+                    <div class="course-name">Nigiri Selection</div>
+                </div>
+                <div class="course-items">
+                    <div class="course-item">
+                        <div class="item-desc">Six pieces of hand-pressed sushi rice topped with salmon, kingfish, snapper, ocean trout, scallop, and prawn. Brushed lightly with soy and served with pickled ginger and wasabi.</div>
+                    </div>
+                </div>
+                <div class="course-divider"></div>
+            </div>
+
+            <div class="menu-sep"><span class="line"></span><span class="dot"></span><span class="line"></span></div>
+
+            <!-- Course 9 - Dessert -->
+            <div class="course reveal">
+                <div class="course-header">
+                    <div class="course-number">Ninth Course</div>
+                    <div class="course-japanese">黒胡麻アフォガート</div>
+                    <div class="course-name">Black Sesame Affogato</div>
+                </div>
+                <div class="course-items">
+                    <div class="course-item">
+                        <div class="item-desc">A scoop of black sesame ice cream drowned in a shot of hot hojicha tea. Topped with a salted cherry blossom or toasted white sesame.</div>
+                    </div>
+                </div>
+                <div class="course-divider"></div>
+            </div>
+
+            <div class="menu-sep"><span class="line"></span><span class="dot"></span><span class="line"></span></div>
+
+            <!-- Drinks -->
+            <div class="course reveal">
+                <div class="course-header">
+                    <div class="course-number">To Accompany</div>
+                    <div class="course-japanese">飲物</div>
+                    <div class="course-name">Nomimono</div>
+                </div>
+                <div class="course-items">
+                    <div class="course-item">
+                        <div class="item-name">Cold Hojicha &amp; Sparkling Water <span class="item-japanese">冷ほうじ茶</span></div>
+                        <div class="item-desc">with citrus, through the raw courses</div>
+                    </div>
+                    <div class="course-item">
+                        <div class="item-name">Ginger Lemongrass Tonic <span class="item-japanese">生姜トニック</span></div>
+                        <div class="item-desc">with the warm dishes</div>
+                    </div>
+                    <div class="course-item">
+                        <div class="item-name">Warm Mugicha <span class="item-japanese">麦茶</span></div>
+                        <div class="item-desc">roasted barley tea, with dessert</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ─── Footer ─── -->
+    <section class="footer">
+        <div class="reveal">
+            <div class="footer-kanji">愛してる</div>
+            <p class="footer-text">Made with love, just for you.</p>
+            <p class="footer-sub">Happy Valentine's Day</p>
+        </div>
+    </section>
+
+    <script>
+        // ── Cherry Blossom Petals ──
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.classList.add('petal');
+            const startX = Math.random() * window.innerWidth;
+            const drift = (Math.random() - 0.5) * 200;
+            const spin = Math.random() * 720 - 360;
+            const duration = 6 + Math.random() * 6;
+            const size = 8 + Math.random() * 8;
+
+            petal.style.left = startX + 'px';
+            petal.style.top = '-20px';
+            petal.style.width = size + 'px';
+            petal.style.height = size + 'px';
+            petal.style.setProperty('--drift', drift + 'px');
+            petal.style.setProperty('--spin', spin + 'deg');
+            petal.style.animationDuration = duration + 's';
+
+            document.body.appendChild(petal);
+            setTimeout(() => petal.remove(), duration * 1000);
+        }
+
+        setInterval(createPetal, 800);
+        // Initial burst
+        for (let i = 0; i < 5; i++) setTimeout(createPetal, i * 200);
+
+        // ── Scroll Reveal ──
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.reveal, .course').forEach(el => observer.observe(el));
+
+        // ── Yes Button ──
+        function sayYes() {
+            const btn = document.querySelector('.yes-btn');
+            const burst = document.getElementById('heartBurst');
+            btn.style.display = 'none';
+            burst.style.display = 'block';
+
+            // Confetti hearts
+            const hearts = ['❤️', '💕', '💗', '🌸', '✨', '💖', '🩷'];
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.classList.add('confetti-heart');
+                    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.top = Math.random() * 30 + 'vh';
+                    heart.style.setProperty('--confetti-spin', (Math.random() * 720 - 360) + 'deg');
+                    heart.style.animationDelay = '0s';
+                    document.body.appendChild(heart);
+                    setTimeout(() => heart.remove(), 3000);
+                }, i * 80);
+            }
+        }
+    </script>
+</body>
+</html>
